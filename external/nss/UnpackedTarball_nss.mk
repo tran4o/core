@@ -15,6 +15,7 @@ $(eval $(call gb_UnpackedTarball_add_patches,nss,\
 	external/nss/nss.patch \
 	external/nss/nss-3.13.5-zlib-werror.patch \
 	$(if $(filter WNTMSC,$(OS)$(COM)),nss/nss.windows.patch) \
+    external/nss/nss.fix-freebl-add-lcc-support.patch.1 \
 	$(if $(filter MSC-INTEL,$(COM)-$(CPUNAME)), \
 		external/nss/nss.cygwin64.in32bit.patch) \
     $(if $(findstring 120_70,$(VCVER)_$(WINDOWS_SDK_VERSION)), \
