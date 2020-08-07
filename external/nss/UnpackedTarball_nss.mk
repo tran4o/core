@@ -20,7 +20,6 @@ $(eval $(call gb_UnpackedTarball_add_patches,nss,\
     $(if $(findstring 120_70,$(VCVER)_$(WINDOWS_SDK_VERSION)), \
         external/nss/nss-winXP-sdk.patch.1) \
 	$(if $(filter WNTMSC,$(OS)$(COM)),external/nss/nss-no-c99.patch) \
-	external/nss/nss.nspr-parallel-win-debug_build.patch \
 ))
 
 # vim: set noet sw=4 ts=4:
