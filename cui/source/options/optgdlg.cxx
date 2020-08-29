@@ -698,6 +698,7 @@ OfaViewTabPage::OfaViewTabPage(weld::Container* pPage, weld::DialogController* p
     , m_xSkiaStatusDisabled(m_xBuilder->weld_label("skiadisabled"))
     , m_xMousePosLB(m_xBuilder->weld_combo_box("mousepos"))
     , m_xMouseMiddleLB(m_xBuilder->weld_combo_box("mousemiddle"))
+    , m_xButtonTestRenderFeatures(m_xBuilder->weld_button("button_test_render_features"))
 {
     if (Application::GetToolkitName() == "gtk3")
     {
