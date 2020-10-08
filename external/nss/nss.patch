@@ -113,7 +113,7 @@
  	$(AR) $(subst /,\\,$(OBJS))
  else
 -	$(AR) $(OBJS)
-+	$(AR) cr $@ $(OBJS)
++	$(AR) -c $@ $(OBJS)
  endif
  	$(RANLIB) $@
  
