@@ -30,11 +30,11 @@ $(call gb_ExternalProject_get_state_target,nss,build): $(call gb_ExternalProject
 		$(if $(MSVC_USE_DEBUG_RUNTIME),USE_DEBUG_RTL=1,BUILD_OPT=1) \
 		NSS_DISABLE_GTESTS=1 \
 		NSS_ENABLE_WERROR=0 \
-		OS_TARGET=WIN95 \
+		MOZ_MSVCVERSION=9 OS_TARGET=WIN95 \
 		$(if $(filter X86_64,$(CPUNAME)),USE_64=1) \
 		LIB="$(ILIB)" \
 		XCFLAGS="$(SOLARINC)" \
-		$(MAKE) nss_build_all RC="rc.exe $(SOLARINC)" \
+		$(MAKE) -j1 nss_build_all RC="rc.exe $(SOLARINC)" \
 			NSINSTALL='$(call gb_ExternalExecutable_get_command,python) $(SRCDIR)/external/nss/nsinstall.py' \
 	,nss)
 
@@ -68,7 +68,7 @@ $(call gb_ExternalProject_get_state_target,nss,build): $(call gb_ExternalProject
 		$(if $(filter YES,$(CROSS_COMPILING)),\
 		NSINSTALL="$(call gb_ExternalExecutable_get_command,python) $(SRCDIR)/external/nss/nsinstall.py") \
 		NSDISTMODE=copy \
-		$(MAKE) AR=$(AR) RANLIB=$(RANLIB) CCC="$(CXX)" NMEDIT=$(NM)edit nss_build_all \
+		$(MAKE) -j1 AR=$(AR) RANLIB=$(RANLIB) CCC="$(CXX)" NMEDIT=$(NM)edit nss_build_all \
 		&& rm -f $(call gb_UnpackedTarball_get_dir,nss)/dist/out/lib/*.a \
 		$(if $(filter MACOSX,$(OS)),\
 			&& chmod u+w $(call gb_UnpackedTarball_get_dir,nss)/dist/out/lib/*.dylib \
