@@ -1009,7 +1009,28 @@ linux-android*)
     BUILD_TYPE="$BUILD_TYPE CAIRO FONTCONFIG FREETYPE"
     ;;
 
-haiku*)
+  emscripten*)
+      build_gstreamer_1_0=no
+      build_gstreamer_0_10=no
+      enable_lotuswordpro=no
+      enable_mpl_subset=yes
+      enable_coinmp=yes
+      enable_lpsolve=no
+      enable_report_builder=no
+      with_theme="tango"
+      test_cups=no
+      test_dbus=no
+      test_fontconfig=no
+      test_freetype=no
+      test_gtk=no
+      test_tde=no
+      test_kde4=no
+      test_randr=no
+      test_xrender=no
+      _os=Emscripten
+      ;;
+
+  haiku*)
     test_cups=no
     test_dbus=no
     test_randr=no
@@ -4856,6 +4877,17 @@ linux-android*)
     esac
     ;;
 
+  emscripten*)
+      COM=emcc
+      USING_X11=
+      OS=EMSCRIPTEN
+      RTL_OS=Emscripten
+      P_SEP=:
+      CPUNAME=INTEL
+      RTL_ARCH=x86
+      PLATFORMID=linux_x86
+      ;;
+
 *netbsd*)
     COM=GCC
     USING_X11=TRUE
@@ -6445,7 +6477,7 @@ if test "$_os" != "WINNT"; then
 fi
 
 dnl check for GNU C++ compiler version
-if test "$GXX" = "yes" -a -z "$COM_IS_CLANG"; then
+if test "$GXX" = "yes"; then
     AC_MSG_CHECKING([the GNU C++ compiler version])
 
     _gpp_version=`$CXX -dumpversion`
@@ -8697,10 +8729,13 @@ AC_MSG_CHECKING([which zlib to use])
 if test "$with_system_zlib" = "yes"; then
     AC_MSG_RESULT([external])
     SYSTEM_ZLIB=TRUE
-    AC_CHECK_HEADER(zlib.h, [],
-        [AC_MSG_ERROR(zlib.h not found. install zlib)], [])
-    AC_CHECK_LIB(z, deflate, [ ZLIB_LIBS=-lz ],
-        [AC_MSG_ERROR(zlib not found or functional)], [])
+    if test "$_os" != "Emscripten"; then
+        # Emscripten provides its own zlib, don't check for that
+        AC_CHECK_HEADER(zlib.h, [],
+            [AC_MSG_ERROR(zlib.h not found. install zlib)], [])
+        AC_CHECK_LIB(z, deflate, [ ZLIB_LIBS=-lz ],
+            [AC_MSG_ERROR(zlib not found or functional)], [])
+   fi
 else
     AC_MSG_RESULT([internal])
     SYSTEM_ZLIB=
@@ -12846,16 +12881,16 @@ dnl Test whether to use liblangtag
 dnl ===================================================================
 SYSTEM_LIBLANGTAG=
 AC_MSG_CHECKING([whether to use system liblangtag])
-if test "$with_system_liblangtag" = yes; then
-    SYSTEM_LIBLANGTAG=TRUE
-    AC_MSG_RESULT([yes])
-    PKG_CHECK_MODULES( LIBLANGTAG, liblangtag >= 0.4.0)
-    dnl cf. <https://bitbucket.org/tagoh/liblangtag/commits/9324836a0d1c> "Fix a build issue with inline keyword"
-    PKG_CHECK_EXISTS([liblangtag >= 0.5.5], [], [AC_DEFINE([LIBLANGTAG_INLINE_FIX])])
-    LIBLANGTAG_CFLAGS=$(printf '%s' "$LIBLANGTAG_CFLAGS" | sed -e "s/-I/${ISYSTEM?}/g")
-    FilterLibs "${LIBLANGTAG_LIBS}"
-    LIBLANGTAG_LIBS="${filteredlibs}"
-else
+#if test "$with_system_liblangtag" = yes; then
+#    SYSTEM_LIBLANGTAG=TRUE
+#    AC_MSG_RESULT([yes])
+#    PKG_CHECK_MODULES( LIBLANGTAG, liblangtag >= 0.4.0)
+#    dnl cf. <https://bitbucket.org/tagoh/liblangtag/commits/9324836a0d1c> "Fix a build issue with inline keyword"
+#    PKG_CHECK_EXISTS([liblangtag >= 0.5.5], [], [AC_DEFINE([LIBLANGTAG_INLINE_FIX])])
+#    LIBLANGTAG_CFLAGS=$(printf '%s' "$LIBLANGTAG_CFLAGS" | sed -e "s/-I/${ISYSTEM?}/g")
+#    FilterLibs "${LIBLANGTAG_LIBS}"
+#    LIBLANGTAG_LIBS="${filteredlibs}"
+#else
     SYSTEM_LIBLANGTAG=
     AC_MSG_RESULT([no])
     BUILD_TYPE="$BUILD_TYPE LIBLANGTAG"
@@ -12865,7 +12900,7 @@ else
     else
         LIBLANGTAG_LIBS="-L${WORKDIR}/UnpackedTarball/liblangtag/liblangtag/.libs -llangtag"
     fi
-fi
+#fi
 AC_SUBST(SYSTEM_LIBLANGTAG)
 AC_SUBST(LIBLANGTAG_CFLAGS)
 AC_SUBST(LIBLANGTAG_LIBS)
