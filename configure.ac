@@ -1014,7 +1014,7 @@ linux-android*)
       build_gstreamer_0_10=no
       enable_lotuswordpro=no
       enable_mpl_subset=yes
-      enable_coinmp=yes
+      enable_coinmp=no
       enable_lpsolve=no
       enable_report_builder=no
       test_cups=no
@@ -4146,9 +4146,9 @@ if test "$GCC" = "yes" -a -z "$COM_IS_CLANG"; then
 
     AC_MSG_RESULT([gcc $_gcc_version ($gcc_full_version)])
 
-    if test "$gcc_full_version" -lt 70000; then
-        AC_MSG_ERROR([GCC $_gcc_version is too old, must be at least GCC 7.0.0])
-    fi
+    #if test "$gcc_full_version" -lt 70000; then
+    #    AC_MSG_ERROR([GCC $_gcc_version is too old, must be at least GCC 7.0.0])
+    #fi
 else
     # Explicitly force GCC_VERSION to be empty, even for Clang, to check incorrect uses.
     # GCC version should generally be checked only when handling GCC-specific bugs, for testing
