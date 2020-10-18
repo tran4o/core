@@ -2855,7 +2855,7 @@ elif test -z "$enable_dynamic_loading"; then
     enable_dynamic_loading=yes
 fi
 
-DISABLE_DYNLOADING='true'
+DISABLE_DYNLOADING=''
 if test "$enable_dynamic_loading" = yes; then
     BUILD_TYPE="$BUILD_TYPE DYNLOADING"
 else
