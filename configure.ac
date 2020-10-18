@@ -4988,9 +4988,9 @@ fi
 
 DISABLE_GUI=""
 if test "$enable_gui" = "no"; then
-    if test "$USING_X11" != TRUE; then
-        AC_MSG_ERROR([$host_os operating system is not suitable to build LibreOffice with --disable-gui.])
-    fi
+    #if test "$USING_X11" != TRUE; then
+    #    AC_MSG_ERROR([$host_os operating system is not suitable to build LibreOffice with --disable-gui.])
+    #fi
     USING_X11=
     DISABLE_GUI=TRUE
     AC_DEFINE(HAVE_FEATURE_UI,0)
