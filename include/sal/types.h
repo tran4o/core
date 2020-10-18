@@ -200,6 +200,9 @@ typedef void *                   sal_Handle;
 
 #define SAL_MAX_ENUM 0x7fffffff
 
+#define SAL_UNX
+#define __GNUC__
+
 #if defined(_MSC_VER)
 #   define SAL_DLLPUBLIC_EXPORT    __declspec(dllexport)
 #   define SAL_JNI_EXPORT          __declspec(dllexport)
@@ -233,18 +236,6 @@ typedef void *                   sal_Handle;
 #         define SAL_DLLPUBLIC_RTTI
 #       endif
 #     endif
-#   else
-#     define SAL_DLLPUBLIC_EXPORT
-#     define SAL_JNI_EXPORT
-#     define SAL_DLLPUBLIC_IMPORT
-#     define SAL_DLLPRIVATE
-#     define SAL_DLLPUBLIC_TEMPLATE
-#     define SAL_DLLPUBLIC_RTTI
-#   endif
-#   define SAL_CALL
-#else
-#   error("unknown platform")
-#endif
 
 /**
    Exporting the symbols necessary for exception handling on GCC.
