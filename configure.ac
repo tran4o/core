@@ -1017,7 +1017,6 @@ linux-android*)
       enable_coinmp=yes
       enable_lpsolve=no
       enable_report_builder=no
-      with_theme="tango"
       test_cups=no
       test_dbus=no
       test_fontconfig=no
