@@ -2855,7 +2855,7 @@ elif test -z "$enable_dynamic_loading"; then
     enable_dynamic_loading=yes
 fi
 
-DISABLE_DYNLOADING=''
+DISABLE_DYNLOADING='true'
 if test "$enable_dynamic_loading" = yes; then
     BUILD_TYPE="$BUILD_TYPE DYNLOADING"
 else
@@ -6975,7 +6975,7 @@ dnl ===================================================================
 # libcmis requires curl and we can't build curl for iOS
 if test $_os != iOS; then
     libo_CHECK_SYSTEM_MODULE([libcmis],[LIBCMIS],[libcmis-0.5 >= 0.5.2])
-    ENABLE_LIBCMIS=TRUE
+    ENABLE_LIBCMIS=
 else
     ENABLE_LIBCMIS=
 fi
